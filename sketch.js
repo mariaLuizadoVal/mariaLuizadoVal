@@ -1,63 +1,38 @@
-var path, boy, leftBoundary, rightBoundary;
-var pathImg, boyImg;
-
-
+var sea,ship;
+var seaImg,shipImg;
 
 function preload(){
-    pathImg = loadImage("path.png");
-    boyImg = loadAnimation("Runner-1.png","Runner-2.png");
+  seaImg = loadImage("sea.png");
+  shipImg1 = loadAnimation("ship-1.png","ship-1.png",
+                            "ship-2.png","ship-1.png");
 }
 
 function setup(){
-    createCanvas(400,400);
+  createCanvas(400,400);
+  background("blue");
 
-    // Movendo o fundo 
-    path = createSprite (200,200);
-    path.addImage(pathImg);
-    path.velocityY = 4 ; 
-    path.scale = 1.2 ;
+  // Plano de fundo móvel
+  sea=createSprite(400,200);
+  sea.addImage(seaImg);
+  sea.velocityX = -5;
+  sea.scale=0.3;
 
-
-    //Criando menino que corre 
-    boy = createSprite (200,300);
-    boy.scale = 0.08 ; 
-    boy.setAnimation("jaxon", boyImg);
-
-
-    // Criando Boundary (Limite) esquerdo  
-    leftBoundary=createSprite(0,0,100,800);
-    leftBoundary.visible = false;
-
-
-    //Crie Boundary direito 
-    rightBoundary=createSprite(400,0,100,800);
-    rightBoundary.visible = false;
+  
+  ship = createSprite(130,200,30,30);
+  ship.addAnimation("movingShip",shipImg1);
+  ship.scale =0.25;
+  
 }
 
-
 function draw() {
-    background(0);
+  background(0);
+  sea.velocityX = -3;
 
-
-    // Menino se movendo no eixo X com o mouse
-    edges = createEdgeSprites();
-    boy.collide(edges[3]);
-    boy.collide(leftBoundary);
-    boy.collide(rightBoundary);
-
-    boy.x = World.mouseX ;
-
-    //Reiniciar o fundo
-    if (path.y === 400){
-        path.y = 200 ;
-    }
-
-
-
-    drawSprites();
-
- }
-
-
-
-
+  
+  //código para redefinir o plano de fundo
+  if(sea.x < 0){
+    sea.x = sea.width/8;
+  }
+    
+  drawSprites();
+}
